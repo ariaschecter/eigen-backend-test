@@ -40,7 +40,26 @@
                 </a>
             </li>
 
+            <li class="">
+                <a href="{{ route('admin.book.index') }}"
+                    class="navItem {{ $route == 'admin.book.index' ? 'active' : '' }}">
+                    <span class="flex items-center">
+                        <iconify-icon class=" nav-icon" icon="heroicons-outline:book-open"></iconify-icon>
+                        <span>Book</span>
+                    </span>
+                </a>
+            </li>
+
             <li class="sidebar-menu-title">User</li>
+            <li class="">
+                <a href="{{ route('admin.member.index') }}"
+                    class="navItem {{ $route == 'admin.member.index' ? 'active' : '' }}">
+                    <span class="flex items-center">
+                        <iconify-icon class=" nav-icon" icon="heroicons-outline:users"></iconify-icon>
+                        <span>Member</span>
+                    </span>
+                </a>
+            </li>
             <li class="">
                 <a href="{{ route('admin.user.index') }}"
                     class="navItem {{ $route == 'admin.user.index' ? 'active' : '' }}">

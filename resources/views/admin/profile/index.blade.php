@@ -11,8 +11,7 @@
             </header>
             @include('admin.partials.alert')
             <div class="card-text h-full ">
-                <form class="space-y-4" method="POST"
-                    action="{{ route(auth()->user()->role . '.profile.update', $user->id) }}">
+                <form class="space-y-4" method="POST" action="{{ route('admin.profile.update', $user->id) }}">
                     @csrf
                     @method('PUT')
                     <div class="input-area relative">

@@ -9,7 +9,7 @@
                     <h4 class="card-title">{{ $title }}
                     </h4>
 
-                    <a href="{{ route('admin.user.create') }}">
+                    <a href="{{ route('admin.book.create') }}">
                         <button class="btn inline-flex justify-center btn-primary ">
                             <span class="flex items-center">
                                 <iconify-icon class="text-xl ltr:mr-2 rtl:ml-2"
@@ -34,14 +34,16 @@
                                                 Id
                                             </th>
                                             <th scope="col" class=" table-th ">
-                                                Name
+                                                code
                                             </th>
                                             <th scope="col" class=" table-th ">
-                                                Email
+                                                Title
                                             </th>
-
                                             <th scope="col" class=" table-th ">
-                                                Email Verified
+                                                Author
+                                            </th>
+                                            <th scope="col" class=" table-th ">
+                                                Stock
                                             </th>
 
                                             <th scope="col" class=" table-th ">
@@ -52,39 +54,26 @@
                                     </thead>
                                     <tbody
                                         class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
-                                        @foreach ($users as $key => $user)
+                                        @foreach ($books as $key => $book)
                                             <tr>
                                                 <td class="table-td">{{ $key + 1 }}</td>
-                                                <td class="table-td">
-                                                    <span class="flex">
-                                                        <span class="w-7 h-7 rounded-full ltr:mr-3 rtl:ml-3 flex-none">
-                                                            <img src="{{ Avatar::create($user->name)->toBase64() }}"
-                                                                alt="{{ $user->name }}"
-                                                                class="object-cover w-full h-full rounded-full">
-                                                        </span>
-                                                        <span class="text-sm text-slate-600 dark:text-slate-300 capitalize">
-                                                            {{ $user->name }}
-                                                        </span>
-                                                    </span>
-                                                </td>
-                                                <td class="table-td"><a
-                                                        href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
-                                                <td class="table-td">
-                                                    {{ \Carbon\Carbon::parse($user->email_verified_at)->diffForHumans() }}
-                                                </td>
+                                                <td class="table-td">{{ $book->code }}</td>
+                                                <td class="table-td">{{ $book->title }}</td>
+                                                <td class="table-td">{{ $book->author }}</td>
+                                                <td class="table-td">{{ $book->stock }}</td>
                                                 <td class="table-td ">
                                                     <div class="flex space-x-3 rtl:space-x-reverse">
-                                                        <a href="{{ route('admin.user.show', $user->id) }}"
+                                                        <a href="{{ route('admin.book.show', $book->id) }}"
                                                             class="toolTip onTop justify-center action-btn"
                                                             data-tippy-content="Show" data-tippy-theme="primary">
                                                             <iconify-icon icon="heroicons:eye"></iconify-icon>
                                                         </a>
-                                                        <a href="{{ route('admin.user.edit', $user->id) }}"
+                                                        <a href="{{ route('admin.book.edit', $book->id) }}"
                                                             class="toolTip onTop justify-center action-btn"
                                                             data-tippy-content="Edit" data-tippy-theme="info">
                                                             <iconify-icon icon="heroicons:pencil-square"></iconify-icon>
                                                         </a>
-                                                        <form action="{{ route('admin.user.destroy', $user->id) }}"
+                                                        <form action="{{ route('admin.book.destroy', $book->id) }}"
                                                             method="POST">
                                                             @method('DELETE')
                                                             @csrf

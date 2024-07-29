@@ -129,12 +129,7 @@
                         class="text-slate-800 dark:text-white focus:ring-0 focus:outline-none font-medium rounded-lg text-sm text-center inline-flex items-center"
                         type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="lg:h-8 lg:w-8 h-7 w-7 rounded-full flex-1 ltr:mr-[10px] rtl:ml-[10px]">
-                            @php
-                                $user = auth()->user();
-                                $image = null;
-                                $image = Avatar::create(auth()->user()->name)->toBase64();
-                            @endphp
-                            <img src="{{ $image }}" alt="user"
+                            <img src="{{ Avatar::create(auth()->user()->name)->toBase64() }}" alt="user"
                                 class="block w-full h-full object-cover rounded-full">
                         </div>
                         <span
@@ -153,7 +148,7 @@
                         class="dropdown-menu z-10 hidden bg-white divide-y divide-slate-100 shadow w-44 dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md overflow-hidden">
                         <ul class="py-1 text-sm text-slate-800 dark:text-slate-200">
                             <li>
-                                <a href="{{ route(auth()->user()->role . '.profile.edit') }}"
+                                <a href="{{ route('admin.profile.edit') }}"
                                     class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600 dark:text-white font-normal">
                                     <iconify-icon icon="heroicons-outline:user"
                                         class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1">

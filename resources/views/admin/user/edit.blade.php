@@ -48,33 +48,6 @@
                             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                         </div>
                     @endif
-                    <div>
-                        @php
-                            $role = [
-                                [
-                                    'label' => 'Admin',
-                                    'value' => 'admin',
-                                ],
-                                [
-                                    'label' => 'User',
-                                    'value' => 'user',
-                                ],
-                            ];
-                        @endphp
-                        <label for="role" class="form-label">Role
-                            @if ($editable)
-                                <x-required />
-                            @endif
-                        </label>
-                        <select name="role" id="role" class="select2 form-control w-full mt-2 py-2"
-                            {{ !$editable ? 'disabled' : '' }}>
-                            @foreach ($role as $rol)
-                                <option value="{{ $rol['value'] }}" {{ $rol['value'] === $user->role ? 'selected' : '' }}
-                                    class=" inline-block font-Inter font-normal text-sm text-slate-600">
-                                    {{ $rol['label'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
 
                     @if ($editable)
                         <button class="btn inline-flex justify-center btn-dark">Submit</button>

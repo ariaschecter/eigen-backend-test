@@ -37,28 +37,6 @@
                             placeholder="Enter Your Password Confirmation">
                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     </div>
-                    <div>
-                        @php
-                            $role = [
-                                [
-                                    'label' => 'Admin',
-                                    'value' => 'admin',
-                                ],
-                                [
-                                    'label' => 'User',
-                                    'value' => 'user',
-                                ],
-                            ];
-                        @endphp
-                        <label for="role" class="form-label">Role <x-required /></label>
-                        <select name="role" id="role" class="select2 form-control w-full mt-2 py-2">
-                            @foreach ($role as $rol)
-                                <option value="{{ $rol['value'] }}" {{ $rol['value'] === old('role') ? 'selected' : '' }}
-                                    class=" inline-block font-Inter font-normal text-sm text-slate-600">
-                                    {{ $rol['label'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
                     <button class="btn inline-flex justify-center btn-dark">Submit</button>
                 </form>
             </div>
