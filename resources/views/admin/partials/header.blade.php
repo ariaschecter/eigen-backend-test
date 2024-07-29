@@ -132,11 +132,7 @@
                             @php
                                 $user = auth()->user();
                                 $image = null;
-                                if (Storage::exists($user->profile_photo)) {
-                                    $image = Storage::url($user->profile_photo);
-                                } else {
-                                    $image = Avatar::create(auth()->user()->name)->toBase64();
-                                }
+                                $image = Avatar::create(auth()->user()->name)->toBase64();
                             @endphp
                             <img src="{{ $image }}" alt="user"
                                 class="block w-full h-full object-cover rounded-full">

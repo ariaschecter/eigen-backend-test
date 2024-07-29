@@ -23,7 +23,7 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create() : View
     {
         return view('auth.register', ['title' => 'Register']);
     }
@@ -33,11 +33,11 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request) : RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -45,24 +45,19 @@ class RegisteredUserController extends Controller
             DB::beginTransaction();
 
             $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone_number' => $request->phone_number,
-                'password' => Hash::make($request->password),
+                'name'              => $request->name,
+                'email'             => $request->email,
+                'phone_number'      => $request->phone_number,
+                'email_verified_at' => now(),
+                'password'          => Hash::make($request->password),
             ]);
 
             event(new Registered($user));
-            $image = 'picture/' . $user->id . '.png';
-
-            $avatar = new Avatar();
-
-            $avatar->create($user->name)->save('uploads/' . $image);
-
-            $user->update(['profile_photo' => $image]);
             DB::commit();
             Auth::login($user);
         } catch (Exception $e) {
             DB::rollback();
+            dd($e);
         }
         return redirect(RouteServiceProvider::HOME);
     }

@@ -47,27 +47,21 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         try {
             DB::beginTransaction();
 
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
+            User::create([
+                'name'              => $request->name,
+                'email'             => $request->email,
+                'password'          => Hash::make($request->password),
                 'email_verified_at' => now()
             ]);
-            $image = 'picture/' . $user->id . '.png';
 
-            $avatar = new Avatar();
-
-            $avatar->create($user->name)->save('uploads/' . $image);
-
-            $user->update(['profile_photo' => $image]);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -110,8 +104,8 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'name'     => ['required', 'string', 'max:255'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -142,21 +136,4 @@ class UserController extends Controller
         $user->delete();
         return redirect()->back();
     }
-
-    // public function archive()
-    // {
-    //     $breadcrumbs = [
-    //         ['User', true, route('admin.user.index')],
-    //         ['Archive', false],
-    //     ];
-    //     $title = 'Archive User';
-    //     $users = User::onlyTrashed()->get();
-    //     return view('admin.user.archive', compact('breadcrumbs', 'title', 'users'));
-    // }
-
-    // public function restore($id)
-    // {
-    //     User::withTrashed()->where('id', $id)->restore();
-    //     return redirect()->back();
-    // }
 }

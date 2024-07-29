@@ -61,7 +61,7 @@
                                                 <td class="table-td">
                                                     <span class="flex">
                                                         <span class="w-7 h-7 rounded-full ltr:mr-3 rtl:ml-3 flex-none">
-                                                            <img src="{{ Storage::url($user->profile_photo) }}"
+                                                            <img src="{{ Avatar::create($user->name)->toBase64() }}"
                                                                 alt="{{ $user->name }}"
                                                                 class="object-cover w-full h-full rounded-full">
                                                         </span>

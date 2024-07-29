@@ -15,13 +15,21 @@
                     @method('PUT')
                     @csrf
                     <div class="input-area relative">
-                        <label for="name" class="form-label">Nama <x-required /></label>
+                        <label for="name" class="form-label">Nama
+                            @if ($editable)
+                                <x-required />
+                            @endif
+                        </label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Masukkan Nama"
                             value="{{ $user->name }}" {{ !$editable ? 'disabled' : '' }}>
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
                     <div class="input-area relative">
-                        <label for="email" class="form-label">Email <x-required /></label>
+                        <label for="email" class="form-label">Email
+                            @if ($editable)
+                                <x-required />
+                            @endif
+                        </label>
                         <input type="text" id="email" name="email" class="form-control"
                             placeholder="Masukkan Email" value="{{ $user->email }}" {{ !$editable ? 'disabled' : '' }}>
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
@@ -53,7 +61,11 @@
                                 ],
                             ];
                         @endphp
-                        <label for="role" class="form-label">Role <x-required /></label>
+                        <label for="role" class="form-label">Role
+                            @if ($editable)
+                                <x-required />
+                            @endif
+                        </label>
                         <select name="role" id="role" class="select2 form-control w-full mt-2 py-2"
                             {{ !$editable ? 'disabled' : '' }}>
                             @foreach ($role as $rol)
