@@ -27,9 +27,16 @@ class BookRequest extends FormRequest
         return [
             'code'                 => ['required', Rule::unique('m_books', 'code')->withoutTrashed()->ignore(@$book->id)],
             'title'                => 'required',
-            'author'               => 'required',
+            'm_author_id'          => 'required|exists:m_authors,id',
             'stock'                => 'required|numeric',
             'admin_email_personal' => ['nullable', 'email', 'max:128',],
+        ];
+    }
+
+    public function attributes() : array
+    {
+        return [
+            'm_author_id' => 'Author',
         ];
     }
 }

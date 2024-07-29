@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
@@ -56,6 +57,7 @@ Route::middleware('language')->group(function () {
         Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
 
         Route::resource('user', UserController::class);
+        Route::resource('author', AuthorController::class);
         Route::resource('member', MemberController::class);
         Route::resource('book', BookController::class);
     });

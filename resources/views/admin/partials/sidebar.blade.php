@@ -40,6 +40,19 @@
                 </a>
             </li>
 
+            <li class="sidebar-menu-title">Transaction</li>
+
+            <li class="sidebar-menu-title">Main</li>
+
+            <li class="">
+                <a href="{{ route('admin.author.index') }}"
+                    class="navItem {{ $route == 'admin.author.index' ? 'active' : '' }}">
+                    <span class="flex items-center">
+                        <iconify-icon class=" nav-icon" icon="heroicons-outline:book-open"></iconify-icon>
+                        <span>Author</span>
+                    </span>
+                </a>
+            </li>
             <li class="">
                 <a href="{{ route('admin.book.index') }}"
                     class="navItem {{ $route == 'admin.book.index' ? 'active' : '' }}">
@@ -50,7 +63,6 @@
                 </a>
             </li>
 
-            <li class="sidebar-menu-title">User</li>
             <li class="">
                 <a href="{{ route('admin.member.index') }}"
                     class="navItem {{ $route == 'admin.member.index' ? 'active' : '' }}">

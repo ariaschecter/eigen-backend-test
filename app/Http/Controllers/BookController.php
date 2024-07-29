@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BookRequest;
+use App\Models\Author;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class BookController extends Controller
             ['Index', false],
         ];
         $title = 'All Books';
-        $books = Book::all();
+        $books = Book::with('author')->get();
+
         return view('admin.book.index', compact('breadcrumbs', 'title', 'books'));
     }
 
@@ -29,7 +31,10 @@ class BookController extends Controller
             ['Create', false],
         ];
         $title = 'Create Book';
-        return view('admin.book.create', compact('breadcrumbs', 'title'));
+
+        $authors = Author::orderBy('name', 'ASC')->get();
+
+        return view('admin.book.create', compact('breadcrumbs', 'title', 'authors'));
     }
 
     /**
@@ -57,7 +62,9 @@ class BookController extends Controller
         ];
         $title = $book->title;
         $editable = false;
-        return view('admin.book.edit', compact('breadcrumbs', 'title', 'book', 'editable'));
+        $authors = Author::orderBy('name', 'ASC')->get();
+
+        return view('admin.book.edit', compact('breadcrumbs', 'title', 'book', 'editable', 'authors'));
     }
 
     /**
@@ -72,7 +79,9 @@ class BookController extends Controller
         ];
         $title = $book->title;
         $editable = true;
-        return view('admin.book.edit', compact('breadcrumbs', 'title', 'book', 'editable'));
+        $authors = Author::orderBy('name', 'ASC')->get();
+
+        return view('admin.book.edit', compact('breadcrumbs', 'title', 'book', 'editable', 'authors'));
     }
 
     /**

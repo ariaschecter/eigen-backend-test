@@ -9,7 +9,7 @@
                     <h4 class="card-title">{{ $title }}
                     </h4>
 
-                    <a href="{{ route('admin.book.create') }}">
+                    <a href="{{ route('admin.author.create') }}">
                         <button class="btn inline-flex justify-center btn-primary ">
                             <span class="flex items-center">
                                 <iconify-icon class="text-xl ltr:mr-2 rtl:ml-2"
@@ -37,13 +37,7 @@
                                                 code
                                             </th>
                                             <th scope="col" class=" table-th ">
-                                                Title
-                                            </th>
-                                            <th scope="col" class=" table-th ">
-                                                Author
-                                            </th>
-                                            <th scope="col" class=" table-th ">
-                                                Stock
+                                                Name
                                             </th>
 
                                             <th scope="col" class=" table-th ">
@@ -54,26 +48,24 @@
                                     </thead>
                                     <tbody
                                         class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
-                                        @foreach ($books as $key => $book)
+                                        @foreach ($authors as $key => $author)
                                             <tr>
                                                 <td class="table-td">{{ $key + 1 }}</td>
-                                                <td class="table-td">{{ $book->code }}</td>
-                                                <td class="table-td">{{ $book->title }}</td>
-                                                <td class="table-td">{{ $book->author->name }}</td>
-                                                <td class="table-td">{{ $book->stock }}</td>
+                                                <td class="table-td">{{ $author->code }}</td>
+                                                <td class="table-td">{{ $author->name }}</td>
                                                 <td class="table-td ">
                                                     <div class="flex space-x-3 rtl:space-x-reverse">
-                                                        <a href="{{ route('admin.book.show', $book->id) }}"
+                                                        <a href="{{ route('admin.member.show', $author->id) }}"
                                                             class="toolTip onTop justify-center action-btn"
                                                             data-tippy-content="Show" data-tippy-theme="primary">
                                                             <iconify-icon icon="heroicons:eye"></iconify-icon>
                                                         </a>
-                                                        <a href="{{ route('admin.book.edit', $book->id) }}"
+                                                        <a href="{{ route('admin.member.edit', $author->id) }}"
                                                             class="toolTip onTop justify-center action-btn"
                                                             data-tippy-content="Edit" data-tippy-theme="info">
                                                             <iconify-icon icon="heroicons:pencil-square"></iconify-icon>
                                                         </a>
-                                                        <form action="{{ route('admin.book.destroy', $book->id) }}"
+                                                        <form action="{{ route('admin.member.destroy', $author->id) }}"
                                                             method="POST">
                                                             @method('DELETE')
                                                             @csrf

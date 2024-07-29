@@ -25,11 +25,17 @@
                             value="{{ old('title') }}">
                         <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
-                    <div class="input-area relative">
-                        <label for="author" class="form-label">Author <x-required /></label>
-                        <input type="text" id="author" name="author" class="form-control" placeholder="Enter Author"
-                            value="{{ old('author') }}">
-                        <x-input-error :messages="$errors->get('author')" class="mt-2" />
+                    <div>
+                        <label for="m_author_id" class="form-label">Author</label>
+                        <select name="m_author_id" id="m_author_id" class="select2 form-control w-full mt-2 py-2">
+                            @foreach ($authors as $author)
+                                <option value="{{ $author->id }}"
+                                    {{ $author->id == old('m_author_id') ? 'selected' : '' }}
+                                    class=" inline-block font-Inter font-normal text-sm text-slate-600">
+                                    {{ $author->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('m_author_id')" class="mt-2" />
                     </div>
                     <div class="input-area relative">
                         <label for="stock" class="form-label">Stock <x-required /></label>
