@@ -39,6 +39,9 @@
                                             <th scope="col" class=" table-th ">
                                                 Name
                                             </th>
+                                            <th scope="col" class=" table-th ">
+                                                Borrow Book
+                                            </th>
 
                                             <th scope="col" class=" table-th ">
                                                 Action
@@ -53,6 +56,7 @@
                                                 <td class="table-td">{{ $key + 1 }}</td>
                                                 <td class="table-td">{{ $member->code }}</td>
                                                 <td class="table-td">{{ $member->name }}</td>
+                                                <td class="table-td">{{ $member->borrowed_book }}</td>
                                                 <td class="table-td ">
                                                     <div class="flex space-x-3 rtl:space-x-reverse">
                                                         <a href="{{ route('admin.member.show', $member->id) }}"

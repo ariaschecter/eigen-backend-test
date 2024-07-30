@@ -16,7 +16,7 @@ class BookController extends Controller
             ['Index', false],
         ];
         $title = 'All Books';
-        $books = Book::with('author')->get();
+        $books = Book::with('author')->withCount(['tBooks as borrowed_book' => fn ($book) => $book->whereNull('return_date')])->get();
 
         return view('admin.book.index', compact('breadcrumbs', 'title', 'books'));
     }

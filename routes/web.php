@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TBookController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +60,17 @@ Route::middleware('language')->group(function () {
         Route::resource('author', AuthorController::class);
         Route::resource('member', MemberController::class);
         Route::resource('book', BookController::class);
+
+        Route::prefix('borrow')->name('borrow.')->group(function () {
+            Route::get('/', [TBookController::class, 'borrow'])->name('borrow');
+            Route::post('/', [TBookController::class, 'storeBorrow']);
+            Route::delete('/{tBook}', [TBookController::class, 'destroyBorrow'])->name('destroy');
+        });
+
+        Route::prefix('return')->name('return.')->group(function () {
+            Route::get('/', [TBookController::class, 'return'])->name('return');
+            Route::post('/', [TBookController::class, 'storeReturn']);
+        });
     });
 });
 

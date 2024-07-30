@@ -41,6 +41,25 @@
             </li>
 
             <li class="sidebar-menu-title">Transaction</li>
+            <li class="">
+                <a href="{{ route('admin.borrow.borrow') }}"
+                    class="navItem {{ $route == 'admin.borrow.borrow' ? 'active' : '' }}">
+                    <span class="flex items-center">
+                        <iconify-icon class=" nav-icon" icon="heroicons-outline:arrow-up-tray"></iconify-icon>
+                        <span>Peminjaman</span>
+                    </span>
+                </a>
+            </li>
+
+            <li class="">
+                <a href="{{ route('admin.return.return') }}"
+                    class="navItem {{ $route == 'admin.return.return' ? 'active' : '' }}">
+                    <span class="flex items-center">
+                        <iconify-icon class=" nav-icon" icon="heroicons-outline:arrow-uturn-down"></iconify-icon>
+                        <span>Pengembalian</span>
+                    </span>
+                </a>
+            </li>
 
             <li class="sidebar-menu-title">Main</li>
 
@@ -48,7 +67,7 @@
                 <a href="{{ route('admin.author.index') }}"
                     class="navItem {{ $route == 'admin.author.index' ? 'active' : '' }}">
                     <span class="flex items-center">
-                        <iconify-icon class=" nav-icon" icon="heroicons-outline:book-open"></iconify-icon>
+                        <iconify-icon class=" nav-icon" icon="heroicons-outline:user"></iconify-icon>
                         <span>Author</span>
                     </span>
                 </a>

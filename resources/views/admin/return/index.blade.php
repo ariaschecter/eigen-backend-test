@@ -8,19 +8,31 @@
                 <header class=" card-header noborder">
                     <h4 class="card-title">{{ $title }}
                     </h4>
-
-                    <a href="{{ route('admin.book.create') }}">
-                        <button class="btn inline-flex justify-center btn-primary ">
-                            <span class="flex items-center">
-                                <iconify-icon class="text-xl ltr:mr-2 rtl:ml-2"
-                                    icon="heroicons-outline:plus-circle"></iconify-icon>
-                                <span>Tambah</span>
-                            </span>
-                        </button>
-                    </a>
                 </header>
-                <div class="card-body px-6 pb-6">
-                    @include('admin.partials.alert')
+                @include('admin.partials.alert')
+                <div class="p-3">
+
+                    <div class="card-text h-full w-1/2">
+                        <form class="space-y-4" method="POST" action="{{ route('admin.return.return') }}">
+                            @csrf
+
+                            <div class="input-area relative">
+                                <label for="code" class="form-label">Code <x-required /></label>
+                                <input type="text" id="code" name="code" class="form-control"
+                                    placeholder="Enter Book Code" value="{{ old('code') }}">
+                                <x-input-error :messages="$errors->get('code')" class="mt-2" />
+                            </div>
+
+                            <button class="btn inline-flex justify-center btn-primary mt-3">
+                                <span class="flex items-center">
+                                    <span>Return</span>
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+                {{-- <div class="card-body px-6 pb-6">
                     <div class="overflow-x-auto -mx-6 dashcode-data-table">
                         <span class=" col-span-8  hidden"></span>
                         <span class="  col-span-4 hidden"></span>
@@ -34,16 +46,20 @@
                                                 Id
                                             </th>
                                             <th scope="col" class=" table-th ">
-                                                code
+                                                Code
                                             </th>
                                             <th scope="col" class=" table-th ">
-                                                Title
+                                                Book Title
                                             </th>
                                             <th scope="col" class=" table-th ">
-                                                Author
+                                                Member Name
                                             </th>
                                             <th scope="col" class=" table-th ">
-                                                Stock
+                                                Borrow Date
+                                            </th>
+
+                                            <th scope="col" class=" table-th ">
+                                                Return Date
                                             </th>
 
                                             <th scope="col" class=" table-th ">
@@ -54,26 +70,31 @@
                                     </thead>
                                     <tbody
                                         class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
-                                        @foreach ($books as $key => $book)
+                                        @foreach ($tBooks as $key => $tBook)
                                             <tr>
                                                 <td class="table-td">{{ $key + 1 }}</td>
-                                                <td class="table-td">{{ $book->code }}</td>
-                                                <td class="table-td">{{ $book->title }}</td>
-                                                <td class="table-td">{{ $book->author->name }}</td>
-                                                <td class="table-td">{{ $book->stock - $book->borrowed_book }}</td>
+                                                <td class="table-td">{{ $tBook->code }}</td>
+                                                <td class="table-td">{{ $tBook->book->title }}</td>
+                                                <td class="table-td">{{ $tBook->member->name }}</td>
+                                                <td class="table-td">
+                                                    {{ \Carbon\Carbon::parse($tBook->borrow_date)->format('d F Y') }}
+                                                </td>
+                                                <td class="table-td">
+                                                    {{ $tBook->return_date ? \Carbon\Carbon::parse($tBook->return_date)->format('d F Y') : '-' }}
+                                                </td>
                                                 <td class="table-td ">
                                                     <div class="flex space-x-3 rtl:space-x-reverse">
-                                                        <a href="{{ route('admin.book.show', $book->id) }}"
+                                                        <a href="{{ route('admin.member.show', $member->id) }}"
                                                             class="toolTip onTop justify-center action-btn"
                                                             data-tippy-content="Show" data-tippy-theme="primary">
                                                             <iconify-icon icon="heroicons:eye"></iconify-icon>
                                                         </a>
-                                                        <a href="{{ route('admin.book.edit', $book->id) }}"
+                                                        <a href="{{ route('admin.member.edit', $member->id) }}"
                                                             class="toolTip onTop justify-center action-btn"
                                                             data-tippy-content="Edit" data-tippy-theme="info">
                                                             <iconify-icon icon="heroicons:pencil-square"></iconify-icon>
                                                         </a>
-                                                        <form action="{{ route('admin.book.destroy', $book->id) }}"
+                                                        <form action="{{ route('admin.member.destroy', $member->id) }}"
                                                             method="POST">
                                                             @method('DELETE')
                                                             @csrf
@@ -93,7 +114,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
 

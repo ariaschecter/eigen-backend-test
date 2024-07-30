@@ -15,7 +15,8 @@ class MemberController extends Controller
             ['Index', false],
         ];
         $title = 'All Members';
-        $members = Member::all();
+        $members = Member::withCount(['tBooks as borrowed_book' => fn ($book) => $book->whereNull('return_date')])->get();
+
         return view('admin.member.index', compact('breadcrumbs', 'title', 'members'));
     }
 
