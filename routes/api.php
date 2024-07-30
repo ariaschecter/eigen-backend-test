@@ -35,26 +35,26 @@ Route::prefix('v1')->group(function () {
         Route::put('/{user}', [UserController::class, 'update']);
         Route::delete('/{user}', [UserController::class, 'destroy']);
     });
-    Route::prefix('authors')->name('users.')->group(function () {
+    Route::prefix('authors')->name('authors.')->group(function () {
         Route::get('/', [AuthorController::class, 'index']);
         Route::post('/', [AuthorController::class, 'store']);
-        Route::get('/{user}', [AuthorController::class, 'show']);
-        Route::put('/{user}', [AuthorController::class, 'update']);
-        Route::delete('/{user}', [AuthorController::class, 'destroy']);
+        Route::get('/{author}', [AuthorController::class, 'show']);
+        Route::put('/{author}', [AuthorController::class, 'update']);
+        Route::delete('/{author}', [AuthorController::class, 'destroy']);
     });
-    Route::prefix('members')->name('users.')->group(function () {
+    Route::prefix('members')->name('members.')->group(function () {
         Route::get('/', [MemberController::class, 'index']);
         Route::post('/', [MemberController::class, 'store']);
-        Route::get('/{user}', [MemberController::class, 'show']);
-        Route::put('/{user}', [MemberController::class, 'update']);
-        Route::delete('/{user}', [MemberController::class, 'destroy']);
+        Route::get('/{member}', [MemberController::class, 'show']);
+        Route::put('/{member}', [MemberController::class, 'update']);
+        Route::delete('/{member}', [MemberController::class, 'destroy']);
     });
-    Route::prefix('books')->name('users.')->group(function () {
+    Route::prefix('books')->name('books.')->group(function () {
         Route::get('/', [BookController::class, 'index']);
         Route::post('/', [BookController::class, 'store']);
-        Route::get('/{user}', [BookController::class, 'show']);
-        Route::put('/{user}', [BookController::class, 'update']);
-        Route::delete('/{user}', [BookController::class, 'destroy']);
+        Route::get('/{book}', [BookController::class, 'show']);
+        Route::put('/{book}', [BookController::class, 'update']);
+        Route::delete('/{book}', [BookController::class, 'destroy']);
     });
 
     Route::prefix('borrow')->name('borrow.')->group(function () {

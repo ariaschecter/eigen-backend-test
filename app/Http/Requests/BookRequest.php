@@ -2,11 +2,18 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class BookRequest extends FormRequest
 {
+    public $validator;
+
+    public function failedValidation(Validator $validator)
+    {
+        $this->validator = $validator;
+    }
     /**
      * Determine if the user is authorized to make this request.
      */

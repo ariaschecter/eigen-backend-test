@@ -2,10 +2,17 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AuthorRequest extends FormRequest
 {
+    public $validator;
+
+    public function failedValidation(Validator $validator)
+    {
+        $this->validator = $validator;
+    }
     /**
      * Determine if the user is authorized to make this request.
      */
