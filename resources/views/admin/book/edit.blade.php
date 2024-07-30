@@ -32,7 +32,10 @@
                         <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
                     <div>
-                        <label for="m_author_id" class="form-label">Author</label>
+                        <label for="m_author_id" class="form-label">Author @if ($editable)
+                                <x-required />
+                            @endif
+                        </label>
                         <select name="m_author_id" id="m_author_id" class="select2 form-control w-full mt-2 py-2">
                             @foreach ($authors as $author)
                                 <option value="{{ $author->id }}"

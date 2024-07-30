@@ -55,17 +55,17 @@
                                                 <td class="table-td">{{ $author->name }}</td>
                                                 <td class="table-td ">
                                                     <div class="flex space-x-3 rtl:space-x-reverse">
-                                                        <a href="{{ route('admin.member.show', $author->id) }}"
+                                                        <a href="{{ route('admin.author.show', $author->id) }}"
                                                             class="toolTip onTop justify-center action-btn"
                                                             data-tippy-content="Show" data-tippy-theme="primary">
                                                             <iconify-icon icon="heroicons:eye"></iconify-icon>
                                                         </a>
-                                                        <a href="{{ route('admin.member.edit', $author->id) }}"
+                                                        <a href="{{ route('admin.author.edit', $author->id) }}"
                                                             class="toolTip onTop justify-center action-btn"
                                                             data-tippy-content="Edit" data-tippy-theme="info">
                                                             <iconify-icon icon="heroicons:pencil-square"></iconify-icon>
                                                         </a>
-                                                        <form action="{{ route('admin.member.destroy', $author->id) }}"
+                                                        <form action="{{ route('admin.author.destroy', $author->id) }}"
                                                             method="POST">
                                                             @method('DELETE')
                                                             @csrf
