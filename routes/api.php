@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\ApiControllers\API\ApiApiAuthorController;
-use App\Http\ApiControllers\API\ApiApiBookController;
-use App\Http\ApiControllers\API\ApiApiHomeController;
-use App\Http\ApiControllers\API\ApiApiMemberController;
-use App\Http\ApiControllers\API\ApiApiTBookController;
-use App\Http\ApiControllers\API\ApiApiUserController;
+use App\Http\ApiControllers\API\ApiAuthorController;
+use App\Http\ApiControllers\API\ApiBookController;
+use App\Http\ApiControllers\API\ApiHomeController;
+use App\Http\ApiControllers\API\ApiMemberController;
+use App\Http\ApiControllers\API\ApiTBookController;
+use App\Http\ApiControllers\API\ApiUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
