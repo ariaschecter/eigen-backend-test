@@ -18,6 +18,7 @@ class BookFactory extends Factory
      */
     public function definition() : array
     {
+        Author::factory()->create();
         return [
             'code'        => Str::random(5),
             'title'       => fake()->name(),
