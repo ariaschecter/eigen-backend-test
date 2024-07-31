@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Book;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -29,7 +30,8 @@ class BookRequest extends FormRequest
      */
     public function rules() : array
     {
-        $book = $this->route()->parameter('book');
+        $bookId = $this->route()->parameter('book');
+        $book = Book::find($bookId);
 
         if ($this->isMethod('POST')) {
             return [
@@ -43,9 +45,9 @@ class BookRequest extends FormRequest
             $request = $this->request->all();
 
             return [
-                'code'        => ['required', $request['code'] != $book->code ? Rule::unique('m_books')->ignore($book->id) : ''],
+                'code'        => ['required', $request['code'] != @$book->code ? Rule::unique('m_books')->ignore(@$book->id) : ''],
                 'title'       => 'required',
-                'm_author_id' => 'required|exists:m_authors,id',
+                'm_author_id' => 'nullable|exists:m_authors,id',
                 'stock'       => 'required|numeric',
             ];
         }

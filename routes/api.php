@@ -28,13 +28,13 @@ Route::get('/home', [HomeController::class, 'index']);
 
 
 Route::prefix('v1')->group(function () {
-    Route::prefix('users')->name('users.')->group(function () {
-        Route::get('/', [UserController::class, 'index']);
-        Route::post('/', [UserController::class, 'store']);
-        Route::get('/{user}', [UserController::class, 'show']);
-        Route::put('/{user}', [UserController::class, 'update']);
-        Route::delete('/{user}', [UserController::class, 'destroy']);
-    });
+    // Route::prefix('users')->name('users.')->group(function () {
+    //     Route::get('/', [UserController::class, 'index']);
+    //     Route::post('/', [UserController::class, 'store']);
+    //     Route::get('/{user}', [UserController::class, 'show']);
+    //     Route::put('/{user}', [UserController::class, 'update']);
+    //     Route::delete('/{user}', [UserController::class, 'destroy']);
+    // });
     Route::prefix('authors')->name('authors.')->group(function () {
         Route::get('/', [AuthorController::class, 'index']);
         Route::post('/', [AuthorController::class, 'store']);

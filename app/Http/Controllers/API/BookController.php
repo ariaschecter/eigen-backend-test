@@ -302,14 +302,19 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
+    public function show($book)
     {
         try {
-            $book = Book::where('id', $book->id)->whereHas('author')->with('author:id,code,name')->withCount(['tBooks as borrowed_book' => fn ($book) => $book->whereNull('return_date')])
+            $book = Book::where('id', $book)->whereHas('author')->with('author:id,code,name')->withCount(['tBooks as borrowed_book' => fn ($book) => $book->whereNull('return_date')])
                 ->first();
-            $book->available_stock = $book->stock - $book->borrowed_book;
+            if ($book) {
 
-            return response()->success(data: $book);
+                $book->available_stock = $book->stock - $book->borrowed_book;
+
+                return response()->success(data: $book);
+            } else {
+                return response()->failed(httpCode: 404);
+            }
         } catch (Exception $e) {
             DB::rollback();
             return response()->failed(message: $e->getMessage());
@@ -319,7 +324,7 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(BookRequest $request, Book $book)
+    public function update(BookRequest $request, $book)
     {
         if (isset($request->validator) && $request->validator->fails()) :
             return response()->failed(error: $request->validator->errors());
@@ -329,12 +334,17 @@ class BookController extends Controller
 
         try {
             DB::beginTransaction();
-            $validated = $request->validated();
-            $book->update($validated);
+            $book = Book::find($book);
 
-            DB::commit();
+            if ($book) {
+                $validated = $request->validated();
+                $book->update($validated);
 
-            return response()->success(data: $book, httpCode: 200);
+                DB::commit();
+                return response()->success(data: $book, httpCode: 200);
+            } else {
+                return response()->failed(httpCode: 404);
+            }
         } catch (Exception $e) {
             DB::rollback();
             return response()->failed(message: $e->getMessage());
@@ -351,8 +361,9 @@ class BookController extends Controller
             if ($book) {
                 $book->delete();
                 return response()->success(data: $book, httpCode: 200);
+            } else {
+                return response()->failed(httpCode: 404);
             }
-            return response()->failed();
         } catch (\Throwable $e) {
             return response()->failed(message: $e->getMessage());
         }

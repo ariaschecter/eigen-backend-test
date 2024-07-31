@@ -288,7 +288,7 @@ class MemberController extends Controller
             if ($member) {
                 return response()->success(data: $member);
             } else {
-                return response()->failed();
+                return response()->failed(httpCode: 404);
             }
         } catch (Exception $e) {
             return response()->failed(message: $e->getMessage());
@@ -298,7 +298,7 @@ class MemberController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(MemberRequest $request, Member $member)
+    public function update(MemberRequest $request, $member)
     {
         if (isset($request->validator) && $request->validator->fails()) :
             return response()->failed(error: $request->validator->errors());
@@ -307,13 +307,18 @@ class MemberController extends Controller
         $validated = $request->validated();
 
         try {
-            DB::beginTransaction();
-            $validated = $request->validated();
-            $member->update($validated);
+            $member = Member::find($member);
 
-            DB::commit();
+            if ($member) {
+                DB::beginTransaction();
+                $validated = $request->validated();
+                $member->update($validated);
+                DB::commit();
 
-            return response()->success(data: $member, httpCode: 200);
+                return response()->success(data: $member, httpCode: 200);
+            } else {
+                return response()->failed(httpCode: 404);
+            }
         } catch (Exception $e) {
             DB::rollback();
             return response()->failed(message: $e->getMessage());
@@ -331,7 +336,7 @@ class MemberController extends Controller
                 $book->delete();
                 return response()->success(data: $book, httpCode: 200);
             }
-            return response()->failed();
+            return response()->failed(httpCode: 404);
         } catch (\Throwable $e) {
             return response()->failed(message: $e->getMessage());
         }

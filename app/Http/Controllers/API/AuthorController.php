@@ -266,15 +266,21 @@ class AuthorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Author $author)
+    public function show($author)
     {
-        return response()->success(data: $author);
+        $author = Author::find($author);
+
+        if ($author) {
+            return response()->success(data: $author);
+        } else {
+            return response()->failed(httpCode: 404);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AuthorRequest $request, Author $author)
+    public function update(AuthorRequest $request, $author)
     {
         if (isset($request->validator) && $request->validator->fails()) :
             return response()->failed(error: $request->validator->errors());
@@ -284,12 +290,18 @@ class AuthorController extends Controller
 
         try {
             DB::beginTransaction();
-            $validated = $request->validated();
-            $author->update($validated);
+            $author = Author::find($author);
 
-            DB::commit();
+            if ($author) {
+                $validated = $request->validated();
+                $author->update($validated);
 
-            return response()->success(data: $author, httpCode: 200);
+                DB::commit();
+
+                return response()->success(data: $author, httpCode: 200);
+            } else {
+                return response()->failed(httpCode: 404);
+            }
         } catch (Exception $e) {
             DB::rollback();
             return response()->failed(message: $e->getMessage());
@@ -303,11 +315,11 @@ class AuthorController extends Controller
     {
         try {
             $author = Author::find($author);
-            if (@$author->id) {
+            if ($author) {
                 $author->delete();
                 return response()->success(data: $author, httpCode: 200);
             }
-            return response()->failed();
+            return response()->failed(httpCode: 404);
         } catch (\Throwable $e) {
             return response()->failed(message: $e->getMessage());
         }
