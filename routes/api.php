@@ -58,15 +58,14 @@ Route::prefix('v1')->group(function () {
     });
 
     // TODO: here
-    Route::prefix('borrow')->name('borrow.')->group(function () {
+    Route::prefix('borrows')->name('borrow.')->group(function () {
         Route::get('/', [TBookController::class, 'borrow'])->name('borrow');
         Route::post('/', [TBookController::class, 'storeBorrow']);
         Route::delete('/{tBook}', [TBookController::class, 'destroyBorrow'])->name('destroy');
     });
 
-    Route::prefix('return')->name('return.')->group(function () {
-        Route::get('/', [TBookController::class, 'return'])->name('return');
-        Route::post('/', [TBookController::class, 'storeReturn']);
+    Route::prefix('returns')->name('return.')->group(function () {
+        Route::post('/', [TBookController::class, 'storeReturn'])->name('return');
     });
 });
 
