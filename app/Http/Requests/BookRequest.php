@@ -31,13 +31,24 @@ class BookRequest extends FormRequest
     {
         $book = $this->route()->parameter('book');
 
-        return [
-            'code'                 => ['required', Rule::unique('m_books', 'code')->withoutTrashed()->ignore(@$book->id)],
-            'title'                => 'required',
-            'm_author_id'          => 'required|exists:m_authors,id',
-            'stock'                => 'required|numeric',
-            'admin_email_personal' => ['nullable', 'email', 'max:128',],
-        ];
+        if ($this->isMethod('POST')) {
+            return [
+                'code'        => 'required|unique:m_books,code',
+                'title'       => 'required',
+                'm_author_id' => 'required|exists:m_authors,id',
+                'stock'       => 'required|numeric',
+            ];
+        } else {
+
+            $request = $this->request->all();
+
+            return [
+                'code'        => ['required', $request['code'] != $book->code ? Rule::unique('m_books')->ignore($book->id) : ''],
+                'title'       => 'required',
+                'm_author_id' => 'required|exists:m_authors,id',
+                'stock'       => 'required|numeric',
+            ];
+        }
     }
 
     public function attributes() : array
