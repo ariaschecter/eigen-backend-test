@@ -20,12 +20,8 @@ use Illuminate\Routing\Controller as BaseController;
  *     )
  * )
  * @OA\Server(
- *     url="https://eigen-test.acielana.my.id/api",
- *     description="DevelopmentServer"
- * )
- * @OA\Server(
- *     url="http://127.0.0.1:8000/api",
- *     description="Local Server"
+ *     url=L5_SWAGGER_CONST_HOST,
+ *     description="Server Url"
  * )
  */
 class SwaggerController extends BaseController

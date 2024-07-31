@@ -6,26 +6,109 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+
+
+/**
+ * @OA\Get(
+ *     path="/v1/users",
+ *     tags={"Users"},
+ *     summary="Get all users",
+ *     description="Returns list of users",
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful operation",
+ *         @OA\JsonContent(
+ *             ref="#/components/schemas/UserGet"
+ *         ),
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Bad request",
+ *     )
+ * )
+ * @OA\Post(
+ *     path="/v1/users",
+ *     tags={"Users"},
+ *     summary="Store User to database",
+ *     description="Store User to database",
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 required={"name", "email", "password", "password_confirmation"},
+ *                 @OA\Property(property="name", type="string", example="John Doe"),
+ *                 @OA\Property(property="email", type="string", example="john@example.com"),
+ *                 @OA\Property(property="password", type="string", example="passwordPanjang"),
+ *                 @OA\Property(property="password_confirmation", type="string", example="passwordPanjang")
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=201,
+ *         description="Successful operation",
+ *         @OA\JsonContent(
+ *             ref="#/components/schemas/UserStore"
+ *         ),
+ *     ),
+ *     @OA\Response(
+ *         response=422,
+ *         description="Bad request",
+ *     )
+ * )
+ */
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Schema(
+     *     schema="User",
+     *     type="object",
+     *     title="Get All Users",
+     *     required={"status_code", "message", "data"},
+     *     @OA\Property(property="id", type="string", example="string"),
+     *     @OA\Property(property="name", type="string", example="John Doe"),
+     *     @OA\Property(property="email", type="string", example="john@example.com"),
+     * )
+     * @OA\Schema(
+     *     schema="UserGet",
+     *     type="object",
+     *     title="Get All Users",
+     *     required={"status_code", "message", "data"},
+     *     @OA\Property(property="status_code", type="integer", example=200),
+     *     @OA\Property(property="message", type="string", example="Data berhasil diambil"),
+     *     @OA\Property(
+     *         property="data",
+     *         type="object",
+     *         ref="#/components/schemas/User"
+     *     ),
+     *     @OA\Property(property="dev", type="string", nullable=true, example=null)
+     * )
+     *
+     * @OA\Schema(
+     *     schema="UserStore",
+     *     type="object",
+     *     required={"status_code", "message", "data"},
+     *     @OA\Property(property="status_code", type="integer", example=201),
+     *     @OA\Property(property="message", type="string", example="Data berhasil ditambahkan"),
+     *     @OA\Property(
+     *         property="data",
+     *         type="object",
+     *         ref="#/components/schemas/User"
+     *     ),
+     *     @OA\Property(property="dev", type="string", nullable=true, example=null)
+     * )
      */
     public function index()
     {
-        $users = User::latest()->get();
+        $users = User::latest()->get(['id', 'name', 'email']);
 
         return response()->success(data: $users, httpCode: 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(UserRequest $request)
     {
         if (isset($request->validator) && $request->validator->fails()) :
@@ -41,6 +124,8 @@ class UserController extends Controller
                 'password'          => Hash::make($request->password),
                 'email_verified_at' => now()
             ]);
+
+            $user = $user->only('id', 'name', 'email');
 
             DB::commit();
 

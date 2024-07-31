@@ -7,10 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
-use Illuminate\Support\Str;
-use Laravolt\Avatar\Avatar;
 
 class UserController extends Controller
 {

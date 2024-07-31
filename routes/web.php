@@ -36,7 +36,7 @@ Route::middleware('language')->group(function () {
 
     // Frontend routes
     Route::get('/', function () {
-        return view('welcome');
+        return redirect('api/documentation');
     });
 
     Route::middleware('auth')->group(function () {
