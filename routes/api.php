@@ -2,10 +2,8 @@
 
 use App\Http\Controllers\API\AuthorController;
 use App\Http\Controllers\API\BookController;
-use App\Http\Controllers\API\HomeController;
 use App\Http\Controllers\API\MemberController;
 use App\Http\Controllers\API\TBookController;
-use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,9 +21,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/home', [HomeController::class, 'index']);
-
 
 Route::prefix('v1')->group(function () {
     // Route::prefix('users')->name('users.')->group(function () {
@@ -61,7 +56,6 @@ Route::prefix('v1')->group(function () {
     Route::prefix('borrows')->name('borrow.')->group(function () {
         Route::get('/', [TBookController::class, 'borrow'])->name('borrow');
         Route::post('/', [TBookController::class, 'storeBorrow']);
-        Route::delete('/{tBook}', [TBookController::class, 'destroyBorrow'])->name('destroy');
     });
 
     Route::prefix('returns')->name('return.')->group(function () {

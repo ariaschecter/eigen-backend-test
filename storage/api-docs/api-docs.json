@@ -618,6 +618,240 @@
                     }
                 }
             }
+        },
+        "/v1/borrows": {
+            "get": {
+                "tags": [
+                    "Borrow"
+                ],
+                "summary": "Get list of borrows",
+                "description": "Returns a list of borrow records with related book and member information.",
+                "operationId": "a109b49e6608cd182a34df4e5e698550",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data berhasil diambil"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "9ca7a33e-cda8-4db8-b827-3208c32b4c69"
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "B2407-XO5"
+                                                    },
+                                                    "borrow_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-07-31"
+                                                    },
+                                                    "return_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": null
+                                                    },
+                                                    "m_member_id": {
+                                                        "type": "string",
+                                                        "example": "9ca7a31e-3c61-48a0-b26c-5a56757c8df3"
+                                                    },
+                                                    "m_book_id": {
+                                                        "type": "string",
+                                                        "example": "9ca7a31e-3b83-41d6-9154-5cc49ca20743"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2024-07-31T15:02:02.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2024-07-31T15:02:02.000000Z"
+                                                    },
+                                                    "deleted_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": null
+                                                    },
+                                                    "book": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "9ca7a31e-3b83-41d6-9154-5cc49ca20743"
+                                                            },
+                                                            "code": {
+                                                                "type": "string",
+                                                                "example": "HOB-83"
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "The Hobbit, or There and Back Again"
+                                                            },
+                                                            "stock": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "m_author_id": {
+                                                                "type": "string",
+                                                                "example": "9ca7a31e-3b63-456a-a48b-55535be38765"
+                                                            },
+                                                            "author": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "string",
+                                                                        "example": "9ca7a31e-3b63-456a-a48b-55535be38765"
+                                                                    },
+                                                                    "code": {
+                                                                        "type": "string",
+                                                                        "example": null
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string",
+                                                                        "example": "J.R.R. Tolkien"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "member": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string",
+                                                                "example": "9ca7a31e-3c61-48a0-b26c-5a56757c8df3"
+                                                            },
+                                                            "code": {
+                                                                "type": "string",
+                                                                "example": "M001"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Angga"
+                                                            },
+                                                            "penalty": {
+                                                                "type": "string",
+                                                                "example": null
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "dev": {
+                                            "type": "string",
+                                            "example": null
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Borrow"
+                ],
+                "summary": "Create a new borrow record",
+                "description": "Creates a new borrow record and returns the details of the created record.",
+                "operationId": "a508402c11dc6af2f9e06483fde63fc6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BorrowRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Borrow record created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BorrowResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/v1/returns": {
+            "post": {
+                "tags": [
+                    "Return"
+                ],
+                "summary": "Return a borrowed book",
+                "description": "Records the return of a borrowed book and returns the details of the return record.",
+                "operationId": "1cb8fd158bef4b6bf1fef0e394d11373",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "B2407-5V9"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Book returned successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ReturnResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input data"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -1198,6 +1432,139 @@
                     }
                 },
                 "type": "object"
+            },
+            "BorrowRequest": {
+                "required": [
+                    "m_member_id",
+                    "m_book_id"
+                ],
+                "properties": {
+                    "m_member_id": {
+                        "type": "string",
+                        "example": "9ca7a31e-3c61-48a0-b26c-5a56757c8df3"
+                    },
+                    "m_book_id": {
+                        "type": "string",
+                        "example": "9ca7a31e-3b83-41d6-9154-5cc49ca20743"
+                    }
+                },
+                "type": "object"
+            },
+            "BorrowResponse": {
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 201
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Data berhasil ditambahkan"
+                    },
+                    "data": {
+                        "properties": {
+                            "m_member_id": {
+                                "type": "string",
+                                "example": "9ca7a31e-3c61-48a0-b26c-5a56757c8df3"
+                            },
+                            "m_book_id": {
+                                "type": "string",
+                                "example": "9ca7a31e-3b83-41d6-9154-5cc49ca20743"
+                            },
+                            "borrow_date": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-07-31T15:19:17.483108Z"
+                            },
+                            "code": {
+                                "type": "string",
+                                "example": "B2407-01N"
+                            },
+                            "id": {
+                                "type": "string",
+                                "example": "9ca7a969-b496-45df-99de-eef0ebc66e58"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-07-31T15:19:17.000000Z"
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-07-31T15:19:17.000000Z"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null
+                    }
+                },
+                "type": "object"
+            },
+            "ReturnResponse": {
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Berhasil Mengembalikan Buku."
+                    },
+                    "data": {
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "9ca7ab94-7409-48f6-b712-406d42f64ffe"
+                            },
+                            "code": {
+                                "type": "string",
+                                "example": "B2407-5V9"
+                            },
+                            "borrow_date": {
+                                "type": "string",
+                                "format": "date",
+                                "example": "2024-07-31"
+                            },
+                            "return_date": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-07-31T15:30:09.353265Z"
+                            },
+                            "m_member_id": {
+                                "type": "string",
+                                "example": "9ca7a31e-3c61-48a0-b26c-5a56757c8df3"
+                            },
+                            "m_book_id": {
+                                "type": "string",
+                                "example": "9ca7a31e-3b83-41d6-9154-5cc49ca20743"
+                            },
+                            "created_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-07-31T15:25:21.000000Z"
+                            },
+                            "updated_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-07-31T15:30:09.000000Z"
+                            },
+                            "deleted_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": null
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -1213,6 +1580,14 @@
         {
             "name": "Members",
             "description": "Members"
+        },
+        {
+            "name": "Borrow",
+            "description": "Borrow"
+        },
+        {
+            "name": "Return",
+            "description": "Return"
         }
     ]
 }
