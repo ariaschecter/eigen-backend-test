@@ -348,7 +348,7 @@ class BookController extends Controller
     {
         try {
             $book = Book::find($book);
-            if (@$book->id) {
+            if ($book) {
                 $book->delete();
                 return response()->success(data: $book, httpCode: 200);
             }

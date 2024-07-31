@@ -429,21 +429,21 @@
                 }
             }
         },
-        "/v1/users": {
+        "/v1/members": {
             "get": {
                 "tags": [
-                    "Users"
+                    "Members"
                 ],
-                "summary": "Get all users",
-                "description": "Returns list of users",
-                "operationId": "8ab643cdfa2c83702256ca21830b256e",
+                "summary": "Get all members",
+                "description": "Returns list of members",
+                "operationId": "f13fd8798f625121aee4110b9535cb13",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserGet"
+                                    "$ref": "#/components/schemas/MemberGet"
                                 }
                             }
                         }
@@ -455,38 +455,23 @@
             },
             "post": {
                 "tags": [
-                    "Users"
+                    "Members"
                 ],
-                "summary": "Store User to database",
-                "description": "Store User to database",
-                "operationId": "3dde3e31351d54e82d2fc577078f90f6",
+                "summary": "Store member to database",
+                "description": "Store member to database",
+                "operationId": "c31d7447d0af08d1f69df95842ce9e00",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "name",
-                                    "email",
-                                    "password",
-                                    "password_confirmation"
+                                    "name"
                                 ],
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "John Doe"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "example": "john@example.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "passwordPanjang"
-                                    },
-                                    "password_confirmation": {
-                                        "type": "string",
-                                        "example": "passwordPanjang"
+                                        "example": "This is my name"
                                     }
                                 },
                                 "type": "object"
@@ -500,7 +485,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserStore"
+                                    "$ref": "#/components/schemas/MemberStore"
                                 }
                             }
                         }
@@ -511,19 +496,19 @@
                 }
             }
         },
-        "/v1/users/{id}": {
+        "/v1/members/{id}": {
             "get": {
                 "tags": [
-                    "Users"
+                    "Members"
                 ],
-                "summary": "Get detail user",
-                "description": "Returns detail of user",
-                "operationId": "3113762acee587276022700f4043c9c8",
+                "summary": "Get detail member",
+                "description": "Returns detail of member",
+                "operationId": "4de687ae1d52cbe0594bb13b65a35a9f",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "User ID",
+                        "description": "member ID",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -536,7 +521,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserGetDetail"
+                                    "$ref": "#/components/schemas/MemberGetDetail"
                                 }
                             }
                         }
@@ -548,16 +533,16 @@
             },
             "put": {
                 "tags": [
-                    "Users"
+                    "Members"
                 ],
-                "summary": "Update user",
-                "description": "Returns updated user",
-                "operationId": "16f98b417452827504ecbabbe9afbc4f",
+                "summary": "Update member",
+                "description": "Returns updated member",
+                "operationId": "04a30ba336f993683ee73f64ffc88b37",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "User ID",
+                        "description": "member ID",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -575,11 +560,7 @@
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "John Doe"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": ""
+                                        "example": "This is my name"
                                     }
                                 },
                                 "type": "object"
@@ -593,7 +574,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserPutDetail"
+                                    "$ref": "#/components/schemas/MemberPutDetail"
                                 }
                             }
                         }
@@ -605,16 +586,16 @@
             },
             "delete": {
                 "tags": [
-                    "Users"
+                    "Members"
                 ],
-                "summary": "Get deleted user",
-                "description": "Return deleted user",
-                "operationId": "f5725723b95e83803bc58c7b4ec730b1",
+                "summary": "Get deleted member",
+                "description": "Return deleted member",
+                "operationId": "cda5bd8e43b69025b32c8ea40649112c",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "User ID",
+                        "description": "member ID",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -627,7 +608,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/UserDelete"
+                                    "$ref": "#/components/schemas/MemberDelete"
                                 }
                             }
                         }
@@ -1030,8 +1011,34 @@
                 },
                 "type": "object"
             },
-            "User": {
-                "title": "Get All Users",
+            "MemberAll": {
+                "title": "Get All members",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "9ca5730f-866c-430f-8067-c112e0ac9a5c"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "A0001"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "penalty": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "borrowed_book": {
+                        "type": "integer",
+                        "example": 0
+                    }
+                },
+                "type": "object"
+            },
+            "Member": {
+                "title": "Get All members",
                 "required": [
                     "status_code",
                     "message",
@@ -1042,19 +1049,23 @@
                         "type": "string",
                         "example": "9ca5730f-866c-430f-8067-c112e0ac9a5c"
                     },
+                    "code": {
+                        "type": "string",
+                        "example": "A0001"
+                    },
                     "name": {
                         "type": "string",
                         "example": "John Doe"
                     },
-                    "email": {
+                    "penalty": {
                         "type": "string",
-                        "example": "john@example.com"
+                        "example": ""
                     }
                 },
                 "type": "object"
             },
-            "UserGet": {
-                "title": "Get All Users",
+            "MemberGet": {
+                "title": "Get All members",
                 "required": [
                     "status_code",
                     "message",
@@ -1070,7 +1081,7 @@
                         "example": "Data berhasil diambil"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/MemberAll"
                     },
                     "dev": {
                         "type": "string",
@@ -1080,8 +1091,8 @@
                 },
                 "type": "object"
             },
-            "UserStore": {
-                "title": "Add User",
+            "MemberStore": {
+                "title": "Add book",
                 "required": [
                     "status_code",
                     "message",
@@ -1097,7 +1108,7 @@
                         "example": "Data berhasil ditambahkan"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/Member"
                     },
                     "dev": {
                         "type": "string",
@@ -1107,8 +1118,8 @@
                 },
                 "type": "object"
             },
-            "UserGetDetail": {
-                "title": "Get Detail User",
+            "MemberGetDetail": {
+                "title": "Get Detail book",
                 "required": [
                     "status_code",
                     "message",
@@ -1124,7 +1135,7 @@
                         "example": "Data berhasil diambil"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/MemberAll"
                     },
                     "dev": {
                         "type": "string",
@@ -1134,8 +1145,8 @@
                 },
                 "type": "object"
             },
-            "UserPutDetail": {
-                "title": "Update User",
+            "MemberPutDetail": {
+                "title": "Update book",
                 "required": [
                     "status_code",
                     "message",
@@ -1151,7 +1162,7 @@
                         "example": "Data berhasil diubah"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/Member"
                     },
                     "dev": {
                         "type": "string",
@@ -1161,8 +1172,8 @@
                 },
                 "type": "object"
             },
-            "UserDelete": {
-                "title": "Update User",
+            "MemberDelete": {
+                "title": "Update book",
                 "required": [
                     "status_code",
                     "message",
@@ -1178,7 +1189,7 @@
                         "example": "Data berhasil dihapus"
                     },
                     "data": {
-                        "$ref": "#/components/schemas/User"
+                        "$ref": "#/components/schemas/Member"
                     },
                     "dev": {
                         "type": "string",
@@ -1200,8 +1211,8 @@
             "description": "Books"
         },
         {
-            "name": "Users",
-            "description": "Users"
+            "name": "Members",
+            "description": "Members"
         }
     ]
 }
