@@ -3,27 +3,31 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AuthorRequest;
-use App\Models\Author;
+use App\Http\Requests\MemberRequest;
+use App\Models\Book;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-class ApiAuthorController extends Controller
+class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $authors = Author::all();
+        $books = Book::whereHas('author')->with('author:id,code,name')->withCount(['tBooks as borrowed_book' => fn ($book) => $book->whereNull('return_date')])
+            ->get()->map(function ($book) {
+                $book->available_stock = $book->stock - $book->borrowed_book;
+                return $book;
+            });
 
-        return response()->success(data: $authors, httpCode: 200);
+        return response()->success(data: $books, httpCode: 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AuthorRequest $request)
+    public function store(MemberRequest $request)
     {
         if (isset($request->validator) && $request->validator->fails()) :
             return response()->failed(error: $request->validator->errors());
@@ -34,14 +38,12 @@ class ApiAuthorController extends Controller
         try {
             DB::beginTransaction();
 
-            $author_count = Author::withTrashed()->count();
-            $code = $author_count + 1;
-            $validated['code'] = sprintf('A%03d', $code);
-            $author = Author::create($validated);
+            $validated = $request->validated();
+            $book = Book::create($validated);
 
             DB::commit();
 
-            return response()->success(data: $author, httpCode: 201);
+            return response()->success(data: $book, httpCode: 201);
         } catch (Exception $e) {
             DB::rollback();
             return response()->failed(message: $e->getMessage());
@@ -51,15 +53,19 @@ class ApiAuthorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Author $author)
+    public function show(Book $book)
     {
-        return response()->success(data: $author);
+        $book = Book::where('id', $book->id)->whereHas('author')->with('author:id,code,name')->withCount(['tBooks as borrowed_book' => fn ($book) => $book->whereNull('return_date')])
+            ->first();
+        $book->available_stock = $book->stock - $book->borrowed_book;
+
+        return response()->success(data: $book);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AuthorRequest $request, Author $author)
+    public function update(MemberRequest $request, Book $book)
     {
         if (isset($request->validator) && $request->validator->fails()) :
             return response()->failed(error: $request->validator->errors());
@@ -70,11 +76,11 @@ class ApiAuthorController extends Controller
         try {
             DB::beginTransaction();
             $validated = $request->validated();
-            $author->update($validated);
+            $book->update($validated);
 
             DB::commit();
 
-            return response()->success(data: $author, httpCode: 200);
+            return response()->success(data: $book, httpCode: 200);
         } catch (Exception $e) {
             DB::rollback();
             return response()->failed(message: $e->getMessage());
@@ -84,11 +90,11 @@ class ApiAuthorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Author $author)
+    public function destroy(Book $book)
     {
         try {
-            $author->delete();
-            return response()->success(data: $author, httpCode: 200);
+            $book->delete();
+            return response()->success(data: $book, httpCode: 200);
         } catch (Exception $e) {
             return response()->failed(message: $e->getMessage());
         }

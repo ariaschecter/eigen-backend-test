@@ -26,7 +26,7 @@ use App\Models\User;
  * )
  */
 
-class ApiHomeController extends Controller
+class HomeController extends Controller
 {
     /**
      * @OA\Schema(
