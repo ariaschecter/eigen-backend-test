@@ -8,7 +8,7 @@ use App\Models\Member;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-class MemberController extends Controller
+class ApiMemberController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\API\AuthorController;
-use App\Http\Controllers\API\BookController;
-use App\Http\Controllers\API\HomeController;
-use App\Http\Controllers\API\MemberController;
-use App\Http\Controllers\API\TBookController;
-use App\Http\Controllers\API\UserController;
+use App\Http\ApiControllers\API\ApiApiAuthorController;
+use App\Http\ApiControllers\API\ApiApiBookController;
+use App\Http\ApiControllers\API\ApiApiHomeController;
+use App\Http\ApiControllers\API\ApiApiMemberController;
+use App\Http\ApiControllers\API\ApiApiTBookController;
+use App\Http\ApiControllers\API\ApiApiUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,49 +24,49 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/home', [HomeController::class, 'index']);
+Route::get('/home', [ApiHomeController::class, 'index']);
 
 
 Route::prefix('v1')->group(function () {
     Route::prefix('users')->name('users.')->group(function () {
-        Route::get('/', [UserController::class, 'index']);
-        Route::post('/', [UserController::class, 'store']);
-        Route::get('/{user}', [UserController::class, 'show']);
-        Route::put('/{user}', [UserController::class, 'update']);
-        Route::delete('/{user}', [UserController::class, 'destroy']);
+        Route::get('/', [ApiUserController::class, 'index']);
+        Route::post('/', [ApiUserController::class, 'store']);
+        Route::get('/{user}', [ApiUserController::class, 'show']);
+        Route::put('/{user}', [ApiUserController::class, 'update']);
+        Route::delete('/{user}', [ApiUserController::class, 'destroy']);
     });
     Route::prefix('authors')->name('authors.')->group(function () {
-        Route::get('/', [AuthorController::class, 'index']);
-        Route::post('/', [AuthorController::class, 'store']);
-        Route::get('/{author}', [AuthorController::class, 'show']);
-        Route::put('/{author}', [AuthorController::class, 'update']);
-        Route::delete('/{author}', [AuthorController::class, 'destroy']);
+        Route::get('/', [ApiAuthorController::class, 'index']);
+        Route::post('/', [ApiAuthorController::class, 'store']);
+        Route::get('/{author}', [ApiAuthorController::class, 'show']);
+        Route::put('/{author}', [ApiAuthorController::class, 'update']);
+        Route::delete('/{author}', [ApiAuthorController::class, 'destroy']);
     });
     Route::prefix('members')->name('members.')->group(function () {
-        Route::get('/', [MemberController::class, 'index']);
-        Route::post('/', [MemberController::class, 'store']);
-        Route::get('/{member}', [MemberController::class, 'show']);
-        Route::put('/{member}', [MemberController::class, 'update']);
-        Route::delete('/{member}', [MemberController::class, 'destroy']);
+        Route::get('/', [ApiMemberController::class, 'index']);
+        Route::post('/', [ApiMemberController::class, 'store']);
+        Route::get('/{member}', [ApiMemberController::class, 'show']);
+        Route::put('/{member}', [ApiMemberController::class, 'update']);
+        Route::delete('/{member}', [ApiMemberController::class, 'destroy']);
     });
     Route::prefix('books')->name('books.')->group(function () {
-        Route::get('/', [BookController::class, 'index']);
-        Route::post('/', [BookController::class, 'store']);
-        Route::get('/{book}', [BookController::class, 'show']);
-        Route::put('/{book}', [BookController::class, 'update']);
-        Route::delete('/{book}', [BookController::class, 'destroy']);
+        Route::get('/', [ApiBookController::class, 'index']);
+        Route::post('/', [ApiBookController::class, 'store']);
+        Route::get('/{book}', [ApiBookController::class, 'show']);
+        Route::put('/{book}', [ApiBookController::class, 'update']);
+        Route::delete('/{book}', [ApiBookController::class, 'destroy']);
     });
 
     // TODO: here
     Route::prefix('borrow')->name('borrow.')->group(function () {
-        Route::get('/', [TBookController::class, 'borrow'])->name('borrow');
-        Route::post('/', [TBookController::class, 'storeBorrow']);
-        Route::delete('/{tBook}', [TBookController::class, 'destroyBorrow'])->name('destroy');
+        Route::get('/', [ApiTBookController::class, 'borrow'])->name('borrow');
+        Route::post('/', [ApiTBookController::class, 'storeBorrow']);
+        Route::delete('/{tBook}', [ApiTBookController::class, 'destroyBorrow'])->name('destroy');
     });
 
     Route::prefix('return')->name('return.')->group(function () {
-        Route::get('/', [TBookController::class, 'return'])->name('return');
-        Route::post('/', [TBookController::class, 'storeReturn']);
+        Route::get('/', [ApiTBookController::class, 'return'])->name('return');
+        Route::post('/', [ApiTBookController::class, 'storeReturn']);
     });
 });
 

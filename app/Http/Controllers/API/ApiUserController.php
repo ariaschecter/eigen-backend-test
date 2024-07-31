@@ -3,45 +3,48 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AuthorRequest;
-use App\Models\Author;
+use App\Http\Requests\UserRequest;
+use App\Models\User;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
-class AuthorController extends Controller
+class ApiUserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $authors = Author::all();
+        $users = User::latest()->get();
 
-        return response()->success(data: $authors, httpCode: 200);
+        return response()->success(data: $users, httpCode: 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AuthorRequest $request)
+    public function store(UserRequest $request)
     {
         if (isset($request->validator) && $request->validator->fails()) :
             return response()->failed(error: $request->validator->errors());
         endif;
 
-        $validated = $request->validated();
-
         try {
             DB::beginTransaction();
 
-            $author_count = Author::withTrashed()->count();
-            $code = $author_count + 1;
-            $validated['code'] = sprintf('A%03d', $code);
-            $author = Author::create($validated);
+            $user = User::create([
+                'name'              => $request->name,
+                'email'             => $request->email,
+                'password'          => Hash::make($request->password),
+                'email_verified_at' => now()
+            ]);
 
             DB::commit();
 
-            return response()->success(data: $author, httpCode: 201);
+            return response()->success(data: $user, httpCode: 201);
         } catch (Exception $e) {
             DB::rollback();
             return response()->failed(message: $e->getMessage());
@@ -51,15 +54,15 @@ class AuthorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Author $author)
+    public function show(User $user)
     {
-        return response()->success(data: $author);
+        return response()->success(data: $user);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AuthorRequest $request, Author $author)
+    public function update(UserRequest $request, User $user)
     {
         if (isset($request->validator) && $request->validator->fails()) :
             return response()->failed(error: $request->validator->errors());
@@ -69,12 +72,18 @@ class AuthorController extends Controller
 
         try {
             DB::beginTransaction();
-            $validated = $request->validated();
-            $author->update($validated);
+
+            if ($validated['password'] == null) {
+                unset($validated['password']);
+            } else {
+                $validated['password'] = Hash::make($validated['password']);
+            }
+
+            $user->update($validated);
 
             DB::commit();
 
-            return response()->success(data: $author, httpCode: 200);
+            return response()->success(data: $user, httpCode: 200);
         } catch (Exception $e) {
             DB::rollback();
             return response()->failed(message: $e->getMessage());
@@ -84,11 +93,11 @@ class AuthorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Author $author)
+    public function destroy(User $user)
     {
         try {
-            $author->delete();
-            return response()->success(data: $author, httpCode: 200);
+            $user->delete();
+            return response()->success(data: $user, httpCode: 200);
         } catch (Exception $e) {
             return response()->failed(message: $e->getMessage());
         }

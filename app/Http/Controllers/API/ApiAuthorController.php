@@ -3,31 +3,27 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MemberRequest;
-use App\Models\Book;
+use App\Http\Requests\AuthorRequest;
+use App\Models\Author;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
-class BookController extends Controller
+class ApiAuthorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $books = Book::whereHas('author')->with('author:id,code,name')->withCount(['tBooks as borrowed_book' => fn ($book) => $book->whereNull('return_date')])
-            ->get()->map(function ($book) {
-                $book->available_stock = $book->stock - $book->borrowed_book;
-                return $book;
-            });
+        $authors = Author::all();
 
-        return response()->success(data: $books, httpCode: 200);
+        return response()->success(data: $authors, httpCode: 200);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(MemberRequest $request)
+    public function store(AuthorRequest $request)
     {
         if (isset($request->validator) && $request->validator->fails()) :
             return response()->failed(error: $request->validator->errors());
@@ -38,12 +34,14 @@ class BookController extends Controller
         try {
             DB::beginTransaction();
 
-            $validated = $request->validated();
-            $book = Book::create($validated);
+            $author_count = Author::withTrashed()->count();
+            $code = $author_count + 1;
+            $validated['code'] = sprintf('A%03d', $code);
+            $author = Author::create($validated);
 
             DB::commit();
 
-            return response()->success(data: $book, httpCode: 201);
+            return response()->success(data: $author, httpCode: 201);
         } catch (Exception $e) {
             DB::rollback();
             return response()->failed(message: $e->getMessage());
@@ -53,19 +51,15 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Book $book)
+    public function show(Author $author)
     {
-        $book = Book::where('id', $book->id)->whereHas('author')->with('author:id,code,name')->withCount(['tBooks as borrowed_book' => fn ($book) => $book->whereNull('return_date')])
-            ->first();
-        $book->available_stock = $book->stock - $book->borrowed_book;
-
-        return response()->success(data: $book);
+        return response()->success(data: $author);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(MemberRequest $request, Book $book)
+    public function update(AuthorRequest $request, Author $author)
     {
         if (isset($request->validator) && $request->validator->fails()) :
             return response()->failed(error: $request->validator->errors());
@@ -76,11 +70,11 @@ class BookController extends Controller
         try {
             DB::beginTransaction();
             $validated = $request->validated();
-            $book->update($validated);
+            $author->update($validated);
 
             DB::commit();
 
-            return response()->success(data: $book, httpCode: 200);
+            return response()->success(data: $author, httpCode: 200);
         } catch (Exception $e) {
             DB::rollback();
             return response()->failed(message: $e->getMessage());
@@ -90,11 +84,11 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Book $book)
+    public function destroy(Author $author)
     {
         try {
-            $book->delete();
-            return response()->success(data: $book, httpCode: 200);
+            $author->delete();
+            return response()->success(data: $author, httpCode: 200);
         } catch (Exception $e) {
             return response()->failed(message: $e->getMessage());
         }

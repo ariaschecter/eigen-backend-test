@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TBookController extends Controller
+class ApiTBookController extends Controller
 {
     //
 }
