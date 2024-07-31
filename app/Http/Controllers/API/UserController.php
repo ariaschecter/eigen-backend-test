@@ -10,230 +10,230 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 
-/**
- * @OA\Get(
- *     path="/v1/users",
- *     tags={"Users"},
- *     summary="Get all users",
- *     description="Returns list of users",
- *     @OA\Response(
- *         response=200,
- *         description="Successful operation",
- *         @OA\JsonContent(
- *             ref="#/components/schemas/UserGet"
- *         ),
- *     ),
- *     @OA\Response(
- *         response=422,
- *         description="Bad request",
- *     )
- * )
- * @OA\Post(
- *     path="/v1/users",
- *     tags={"Users"},
- *     summary="Store User to database",
- *     description="Store User to database",
- *     @OA\RequestBody(
- *         required=true,
- *         @OA\MediaType(
- *             mediaType="application/json",
- *             @OA\Schema(
- *                 type="object",
- *                 required={"name", "email", "password", "password_confirmation"},
- *                 @OA\Property(property="name", type="string", example="John Doe"),
- *                 @OA\Property(property="email", type="string", example="john@example.com"),
- *                 @OA\Property(property="password", type="string", example="passwordPanjang"),
- *                 @OA\Property(property="password_confirmation", type="string", example="passwordPanjang")
- *             )
- *         )
- *     ),
- *     @OA\Response(
- *         response=201,
- *         description="Successful operation",
- *         @OA\JsonContent(
- *             ref="#/components/schemas/UserStore"
- *         ),
- *     ),
- *     @OA\Response(
- *         response=422,
- *         description="Bad request",
- *     )
- * )
- * @OA\Get(
- *     path="/v1/users/{id}",
- *     tags={"Users"},
- *     summary="Get detail user",
- *     description="Returns detail of user",
- *     @OA\Parameter(
- *         name="id",
- *         in="path",
- *         required=true,
- *         description="User ID",
- *         @OA\Schema(
- *             type="string"
- *         )
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful operation",
- *         @OA\JsonContent(
- *             ref="#/components/schemas/UserGetDetail"
- *         ),
- *     ),
- *     @OA\Response(
- *         response=422,
- *         description="Bad request",
- *     )
- * )
- * @OA\Put(
- *     path="/v1/users/{id}",
- *     tags={"Users"},
- *     summary="Update user",
- *     description="Returns updated user",
- *     @OA\Parameter(
- *         name="id",
- *         in="path",
- *         required=true,
- *         description="User ID",
- *         @OA\Schema(
- *             type="string"
- *         )
- *     ),
- *     @OA\RequestBody(
- *         required=true,
- *         @OA\MediaType(
- *             mediaType="application/json",
- *             @OA\Schema(
- *                 type="object",
- *                 required={"name"},
- *                 @OA\Property(property="name", type="string", example="John Doe"),
- *                 @OA\Property(property="password", type="string", example=""),
- *             )
- *         )
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful operation",
- *         @OA\JsonContent(
- *             ref="#/components/schemas/UserPutDetail"
- *         ),
- *     ),
- *     @OA\Response(
- *         response=422,
- *         description="Bad request",
- *     )
- * )
- * @OA\Delete(
- *     path="/v1/users/{id}",
- *     tags={"Users"},
- *     summary="Get deleted user",
- *     description="Return deleted user",
- *     @OA\Parameter(
- *         name="id",
- *         in="path",
- *         required=true,
- *         description="User ID",
- *         @OA\Schema(
- *             type="string"
- *         )
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful operation",
- *         @OA\JsonContent(
- *             ref="#/components/schemas/UserDelete"
- *         ),
- *     ),
- *     @OA\Response(
- *         response=422,
- *         description="Bad request",
- *     )
- * )
- */
+// /**
+//  * @OA\Get(
+//  *     path="/v1/users",
+//  *     tags={"Users"},
+//  *     summary="Get all users",
+//  *     description="Returns list of users",
+//  *     @OA\Response(
+//  *         response=200,
+//  *         description="Successful operation",
+//  *         @OA\JsonContent(
+//  *             ref="#/components/schemas/UserGet"
+//  *         ),
+//  *     ),
+//  *     @OA\Response(
+//  *         response=422,
+//  *         description="Bad request",
+//  *     )
+//  * )
+//  * @OA\Post(
+//  *     path="/v1/users",
+//  *     tags={"Users"},
+//  *     summary="Store User to database",
+//  *     description="Store User to database",
+//  *     @OA\RequestBody(
+//  *         required=true,
+//  *         @OA\MediaType(
+//  *             mediaType="application/json",
+//  *             @OA\Schema(
+//  *                 type="object",
+//  *                 required={"name", "email", "password", "password_confirmation"},
+//  *                 @OA\Property(property="name", type="string", example="John Doe"),
+//  *                 @OA\Property(property="email", type="string", example="john@example.com"),
+//  *                 @OA\Property(property="password", type="string", example="passwordPanjang"),
+//  *                 @OA\Property(property="password_confirmation", type="string", example="passwordPanjang")
+//  *             )
+//  *         )
+//  *     ),
+//  *     @OA\Response(
+//  *         response=201,
+//  *         description="Successful operation",
+//  *         @OA\JsonContent(
+//  *             ref="#/components/schemas/UserStore"
+//  *         ),
+//  *     ),
+//  *     @OA\Response(
+//  *         response=422,
+//  *         description="Bad request",
+//  *     )
+//  * )
+//  * @OA\Get(
+//  *     path="/v1/users/{id}",
+//  *     tags={"Users"},
+//  *     summary="Get detail user",
+//  *     description="Returns detail of user",
+//  *     @OA\Parameter(
+//  *         name="id",
+//  *         in="path",
+//  *         required=true,
+//  *         description="User ID",
+//  *         @OA\Schema(
+//  *             type="string"
+//  *         )
+//  *     ),
+//  *     @OA\Response(
+//  *         response=200,
+//  *         description="Successful operation",
+//  *         @OA\JsonContent(
+//  *             ref="#/components/schemas/UserGetDetail"
+//  *         ),
+//  *     ),
+//  *     @OA\Response(
+//  *         response=422,
+//  *         description="Bad request",
+//  *     )
+//  * )
+//  * @OA\Put(
+//  *     path="/v1/users/{id}",
+//  *     tags={"Users"},
+//  *     summary="Update user",
+//  *     description="Returns updated user",
+//  *     @OA\Parameter(
+//  *         name="id",
+//  *         in="path",
+//  *         required=true,
+//  *         description="User ID",
+//  *         @OA\Schema(
+//  *             type="string"
+//  *         )
+//  *     ),
+//  *     @OA\RequestBody(
+//  *         required=true,
+//  *         @OA\MediaType(
+//  *             mediaType="application/json",
+//  *             @OA\Schema(
+//  *                 type="object",
+//  *                 required={"name"},
+//  *                 @OA\Property(property="name", type="string", example="John Doe"),
+//  *                 @OA\Property(property="password", type="string", example=""),
+//  *             )
+//  *         )
+//  *     ),
+//  *     @OA\Response(
+//  *         response=200,
+//  *         description="Successful operation",
+//  *         @OA\JsonContent(
+//  *             ref="#/components/schemas/UserPutDetail"
+//  *         ),
+//  *     ),
+//  *     @OA\Response(
+//  *         response=422,
+//  *         description="Bad request",
+//  *     )
+//  * )
+//  * @OA\Delete(
+//  *     path="/v1/users/{id}",
+//  *     tags={"Users"},
+//  *     summary="Get deleted user",
+//  *     description="Return deleted user",
+//  *     @OA\Parameter(
+//  *         name="id",
+//  *         in="path",
+//  *         required=true,
+//  *         description="User ID",
+//  *         @OA\Schema(
+//  *             type="string"
+//  *         )
+//  *     ),
+//  *     @OA\Response(
+//  *         response=200,
+//  *         description="Successful operation",
+//  *         @OA\JsonContent(
+//  *             ref="#/components/schemas/UserDelete"
+//  *         ),
+//  *     ),
+//  *     @OA\Response(
+//  *         response=422,
+//  *         description="Bad request",
+//  *     )
+//  * )
+//  */
 
 class UserController extends Controller
 {
-    /**
-     * @OA\Schema(
-     *     schema="User",
-     *     type="object",
-     *     title="Get All Users",
-     *     required={"status_code", "message", "data"},
-     *     @OA\Property(property="id", type="string", example="9ca5730f-866c-430f-8067-c112e0ac9a5c"),
-     *     @OA\Property(property="name", type="string", example="John Doe"),
-     *     @OA\Property(property="email", type="string", example="john@example.com"),
-     * )
-     * @OA\Schema(
-     *     schema="UserGet",
-     *     type="object",
-     *     title="Get All Users",
-     *     required={"status_code", "message", "data"},
-     *     @OA\Property(property="status_code", type="integer", example=200),
-     *     @OA\Property(property="message", type="string", example="Data berhasil diambil"),
-     *     @OA\Property(
-     *         property="data",
-     *         type="object",
-     *         ref="#/components/schemas/User"
-     *     ),
-     *     @OA\Property(property="dev", type="string", nullable=true, example=null)
-     * )
-     * @OA\Schema(
-     *     schema="UserStore",
-     *     type="object",
-     *     title="Add User",
-     *     required={"status_code", "message", "data"},
-     *     @OA\Property(property="status_code", type="integer", example=201),
-     *     @OA\Property(property="message", type="string", example="Data berhasil ditambahkan"),
-     *     @OA\Property(
-     *         property="data",
-     *         type="object",
-     *         ref="#/components/schemas/User"
-     *     ),
-     *     @OA\Property(property="dev", type="string", nullable=true, example=null)
-     * )
-     * @OA\Schema(
-     *     schema="UserGetDetail",
-     *     type="object",
-     *     title="Get Detail User",
-     *     required={"status_code", "message", "data"},
-     *     @OA\Property(property="status_code", type="integer", example=200),
-     *     @OA\Property(property="message", type="string", example="Data berhasil diambil"),
-     *     @OA\Property(
-     *         property="data",
-     *         type="object",
-     *         ref="#/components/schemas/User"
-     *     ),
-     *     @OA\Property(property="dev", type="string", nullable=true, example=null)
-     * )
-     * @OA\Schema(
-     *     schema="UserPutDetail",
-     *     type="object",
-     *     title="Update User",
-     *     required={"status_code", "message", "data"},
-     *     @OA\Property(property="status_code", type="integer", example=200),
-     *     @OA\Property(property="message", type="string", example="Data berhasil diubah"),
-     *     @OA\Property(
-     *         property="data",
-     *         type="object",
-     *         ref="#/components/schemas/User"
-     *     ),
-     *     @OA\Property(property="dev", type="string", nullable=true, example=null)
-     * )
-     * @OA\Schema(
-     *     schema="UserDelete",
-     *     type="object",
-     *     title="Update User",
-     *     required={"status_code", "message", "data"},
-     *     @OA\Property(property="status_code", type="integer", example=200),
-     *     @OA\Property(property="message", type="string", example="Data berhasil dihapus"),
-     *     @OA\Property(
-     *         property="data",
-     *         type="object",
-     *         ref="#/components/schemas/User"
-     *     ),
-     *     @OA\Property(property="dev", type="string", nullable=true, example=null)
-     * )
-     */
+    // /**
+    //  * @OA\Schema(
+    //  *     schema="User",
+    //  *     type="object",
+    //  *     title="Get All Users",
+    //  *     required={"status_code", "message", "data"},
+    //  *     @OA\Property(property="id", type="string", example="9ca5730f-866c-430f-8067-c112e0ac9a5c"),
+    //  *     @OA\Property(property="name", type="string", example="John Doe"),
+    //  *     @OA\Property(property="email", type="string", example="john@example.com"),
+    //  * )
+    //  * @OA\Schema(
+    //  *     schema="UserGet",
+    //  *     type="object",
+    //  *     title="Get All Users",
+    //  *     required={"status_code", "message", "data"},
+    //  *     @OA\Property(property="status_code", type="integer", example=200),
+    //  *     @OA\Property(property="message", type="string", example="Data berhasil diambil"),
+    //  *     @OA\Property(
+    //  *         property="data",
+    //  *         type="object",
+    //  *         ref="#/components/schemas/User"
+    //  *     ),
+    //  *     @OA\Property(property="dev", type="string", nullable=true, example=null)
+    //  * )
+    //  * @OA\Schema(
+    //  *     schema="UserStore",
+    //  *     type="object",
+    //  *     title="Add User",
+    //  *     required={"status_code", "message", "data"},
+    //  *     @OA\Property(property="status_code", type="integer", example=201),
+    //  *     @OA\Property(property="message", type="string", example="Data berhasil ditambahkan"),
+    //  *     @OA\Property(
+    //  *         property="data",
+    //  *         type="object",
+    //  *         ref="#/components/schemas/User"
+    //  *     ),
+    //  *     @OA\Property(property="dev", type="string", nullable=true, example=null)
+    //  * )
+    //  * @OA\Schema(
+    //  *     schema="UserGetDetail",
+    //  *     type="object",
+    //  *     title="Get Detail User",
+    //  *     required={"status_code", "message", "data"},
+    //  *     @OA\Property(property="status_code", type="integer", example=200),
+    //  *     @OA\Property(property="message", type="string", example="Data berhasil diambil"),
+    //  *     @OA\Property(
+    //  *         property="data",
+    //  *         type="object",
+    //  *         ref="#/components/schemas/User"
+    //  *     ),
+    //  *     @OA\Property(property="dev", type="string", nullable=true, example=null)
+    //  * )
+    //  * @OA\Schema(
+    //  *     schema="UserPutDetail",
+    //  *     type="object",
+    //  *     title="Update User",
+    //  *     required={"status_code", "message", "data"},
+    //  *     @OA\Property(property="status_code", type="integer", example=200),
+    //  *     @OA\Property(property="message", type="string", example="Data berhasil diubah"),
+    //  *     @OA\Property(
+    //  *         property="data",
+    //  *         type="object",
+    //  *         ref="#/components/schemas/User"
+    //  *     ),
+    //  *     @OA\Property(property="dev", type="string", nullable=true, example=null)
+    //  * )
+    //  * @OA\Schema(
+    //  *     schema="UserDelete",
+    //  *     type="object",
+    //  *     title="Update User",
+    //  *     required={"status_code", "message", "data"},
+    //  *     @OA\Property(property="status_code", type="integer", example=200),
+    //  *     @OA\Property(property="message", type="string", example="Data berhasil dihapus"),
+    //  *     @OA\Property(
+    //  *         property="data",
+    //  *         type="object",
+    //  *         ref="#/components/schemas/User"
+    //  *     ),
+    //  *     @OA\Property(property="dev", type="string", nullable=true, example=null)
+    //  * )
+    //  */
     public function index()
     {
         $users = User::latest()->get(['id', 'name', 'email']);
