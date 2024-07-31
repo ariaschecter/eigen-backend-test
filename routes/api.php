@@ -25,6 +25,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/home', [HomeController::class, 'index']);
+Route::get('/storage_path', function () {
+    dd(storage_path('api-docs'));
+});
 
 
 Route::prefix('v1')->group(function () {
