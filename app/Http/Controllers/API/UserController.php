@@ -126,7 +126,7 @@ use Illuminate\Support\Facades\Hash;
  * @OA\Delete(
  *     path="/v1/users/{id}",
  *     tags={"Users"},
- *     summary="Get detail users",
+ *     summary="Get deleted user",
  *     description="Return deleted user",
  *     @OA\Parameter(
  *         name="id",

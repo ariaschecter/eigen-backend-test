@@ -19,6 +19,196 @@
         }
     ],
     "paths": {
+        "/v1/authors": {
+            "get": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Get all authors",
+                "description": "Returns list of authors",
+                "operationId": "9feccaa0144c8dca6ab156895e14a625",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthorGet"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Store Author to database",
+                "description": "Store Author to database",
+                "operationId": "68b18cda651b37a19e547897a9c06fad",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthorStore"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/v1/authors/{id}": {
+            "get": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Get detail author",
+                "description": "Returns detail of author",
+                "operationId": "a6026fb9bb3f4483376094f5e82fbf1d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Author ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthorGetDetail"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Update author",
+                "description": "Returns updated author",
+                "operationId": "21ea03988a5398eab14e4702d0232c72",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Author ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthorPutDetail"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Get deleted author",
+                "description": "Return deleted author",
+                "operationId": "a43bf9e1f338f3ba99d0cff9934c99c7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Author ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthorDelete"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
         "/v1/users": {
             "get": {
                 "tags": [
@@ -169,7 +359,7 @@
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "passwordPanjang"
+                                        "example": ""
                                     }
                                 },
                                 "type": "object"
@@ -197,7 +387,7 @@
                 "tags": [
                     "Users"
                 ],
-                "summary": "Get detail users",
+                "summary": "Get deleted user",
                 "description": "Return deleted user",
                 "operationId": "f5725723b95e83803bc58c7b4ec730b1",
                 "parameters": [
@@ -231,6 +421,176 @@
     },
     "components": {
         "schemas": {
+            "Author": {
+                "title": "Get All Authors",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "string"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "A0001"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2024-07-30T12:55:39.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "example": "2024-07-30T12:55:39.000000Z"
+                    },
+                    "deleted_at": {
+                        "type": "string",
+                        "example": null
+                    }
+                },
+                "type": "object"
+            },
+            "AuthorGet": {
+                "title": "Get All Authors",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Data berhasil diambil"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Author"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "AuthorStore": {
+                "title": "Add Author",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 201
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Data berhasil ditambahkan"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Author"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "AuthorGetDetail": {
+                "title": "Get Detail Author",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Data berhasil diambil"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Author"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "AuthorPutDetail": {
+                "title": "Update Author",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Data berhasil diubah"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Author"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "AuthorDelete": {
+                "title": "Update Author",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Data berhasil dihapus"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Author"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "User": {
                 "title": "Get All Users",
                 "required": [
@@ -392,6 +752,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Authors",
+            "description": "Authors"
+        },
         {
             "name": "Users",
             "description": "Users"
