@@ -81,10 +81,6 @@
                                                 Return Date
                                             </th>
 
-                                            <th scope="col" class=" table-th ">
-                                                Action
-                                            </th>
-
                                         </tr>
                                     </thead>
                                     <tbody
@@ -100,20 +96,6 @@
                                                 </td>
                                                 <td class="table-td">
                                                     {{ $tBook->return_date ? \Carbon\Carbon::parse($tBook->return_date)->format('d F Y') : '-' }}
-                                                </td>
-                                                <td class="table-td ">
-                                                    <div class="flex space-x-3 rtl:space-x-reverse">
-                                                        <form action="{{ route('admin.borrow.destroy', $tBook->id) }}"
-                                                            method="POST">
-                                                            @method('DELETE')
-                                                            @csrf
-                                                            <button class="toolTip onTop justify-center action-btn"
-                                                                type="submit" data-tippy-content="Delete"
-                                                                data-tippy-theme="danger">
-                                                                <iconify-icon icon="heroicons:trash"></iconify-icon>
-                                                            </button>
-                                                        </form>
-                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach

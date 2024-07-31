@@ -64,7 +64,6 @@ Route::middleware('language')->group(function () {
         Route::prefix('borrow')->name('borrow.')->group(function () {
             Route::get('/', [TBookController::class, 'borrow'])->name('borrow');
             Route::post('/', [TBookController::class, 'storeBorrow']);
-            Route::delete('/{tBook}', [TBookController::class, 'destroyBorrow'])->name('destroy');
         });
 
         Route::prefix('return')->name('return.')->group(function () {
