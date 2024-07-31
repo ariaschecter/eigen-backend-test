@@ -209,6 +209,226 @@
                 }
             }
         },
+        "/v1/books": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get all books",
+                "description": "Returns list of books",
+                "operationId": "fbc065ecc4699cb4c14c92524f11dd01",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookGet"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Store book to database",
+                "description": "Store book to database",
+                "operationId": "41ee0be02bdeb4d3b6e8ad9e673b2e38",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "title",
+                                    "m_author_id",
+                                    "stock"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "BK-192"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Buku Matematika"
+                                    },
+                                    "m_author_id": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "stock": {
+                                        "type": "integer",
+                                        "example": 12
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookStore"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/v1/books/{id}": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get detail book",
+                "description": "Returns detail of book",
+                "operationId": "acd2f562ccceba6d3dd6500705a62c1d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookGetDetail"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Update book",
+                "description": "Returns updated book",
+                "operationId": "29a200699e28ce2daf7693d1c9a97676",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "title",
+                                    "m_author_id",
+                                    "stock"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "BK-192"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Buku Matematika"
+                                    },
+                                    "m_author_id": {
+                                        "type": "string",
+                                        "example": ""
+                                    },
+                                    "stock": {
+                                        "type": "integer",
+                                        "example": 12
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookPutDetail"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Get deleted book",
+                "description": "Return deleted book",
+                "operationId": "c4a2f812d97dd9cef92c79e4afb7778f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookDelete"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
         "/v1/users": {
             "get": {
                 "tags": [
@@ -431,7 +651,7 @@
                 "properties": {
                     "id": {
                         "type": "string",
-                        "example": "string"
+                        "example": "9ca5730f-866c-430f-8067-c112e0ac9a5c"
                     },
                     "code": {
                         "type": "string",
@@ -440,18 +660,6 @@
                     "name": {
                         "type": "string",
                         "example": "John Doe"
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "example": "2024-07-30T12:55:39.000000Z"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "example": "2024-07-30T12:55:39.000000Z"
-                    },
-                    "deleted_at": {
-                        "type": "string",
-                        "example": null
                     }
                 },
                 "type": "object"
@@ -591,6 +799,237 @@
                 },
                 "type": "object"
             },
+            "author": {
+                "title": "Author",
+                "required": [
+                    "id",
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "9ca5730f-866c-430f-8067-c112e0ac9a5c"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "J.K Rowling"
+                    }
+                },
+                "type": "object"
+            },
+            "bookAll": {
+                "title": "Get All books",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "9ca5730f-866c-430f-8067-c112e0ac9a5c"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "A0001"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "stock": {
+                        "type": "integer",
+                        "example": 12
+                    },
+                    "m_author_id": {
+                        "type": "string",
+                        "example": "9ca5730f-866c-430f-8067-c112e0ac9a5d"
+                    },
+                    "borrowed_book": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "available_stock": {
+                        "type": "integer",
+                        "example": 12
+                    },
+                    "author": {
+                        "$ref": "#/components/schemas/author"
+                    }
+                },
+                "type": "object"
+            },
+            "book": {
+                "title": "Get All books",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "9ca5730f-866c-430f-8067-c112e0ac9a5c"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "A0001"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "stock": {
+                        "type": "integer",
+                        "example": 12
+                    },
+                    "m_author_id": {
+                        "type": "string",
+                        "example": "9ca5730f-866c-430f-8067-c112e0ac9a5d"
+                    }
+                },
+                "type": "object"
+            },
+            "BookGet": {
+                "title": "Get All books",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Data berhasil diambil"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/bookAll"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "BookStore": {
+                "title": "Add book",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 201
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Data berhasil ditambahkan"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/book"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "BookGetDetail": {
+                "title": "Get Detail book",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Data berhasil diambil"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/bookAll"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "BookPutDetail": {
+                "title": "Update book",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Data berhasil diubah"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/book"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "BookDelete": {
+                "title": "Update book",
+                "required": [
+                    "status_code",
+                    "message",
+                    "data"
+                ],
+                "properties": {
+                    "status_code": {
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Data berhasil dihapus"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/book"
+                    },
+                    "dev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "User": {
                 "title": "Get All Users",
                 "required": [
@@ -601,7 +1040,7 @@
                 "properties": {
                     "id": {
                         "type": "string",
-                        "example": "string"
+                        "example": "9ca5730f-866c-430f-8067-c112e0ac9a5c"
                     },
                     "name": {
                         "type": "string",
@@ -755,6 +1194,10 @@
         {
             "name": "Authors",
             "description": "Authors"
+        },
+        {
+            "name": "Books",
+            "description": "Books"
         },
         {
             "name": "Users",

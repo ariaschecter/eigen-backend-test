@@ -153,12 +153,9 @@ class AuthorController extends Controller
      *     type="object",
      *     title="Get All Authors",
      *     required={"status_code", "message", "data"},
-     *     @OA\Property(property="id", type="string", example="string"),
+     *     @OA\Property(property="id", type="string", example="9ca5730f-866c-430f-8067-c112e0ac9a5c"),
      *     @OA\Property(property="code", type="string", example="A0001"),
      *     @OA\Property(property="name", type="string", example="John Doe"),
-     *     @OA\Property(property="created_at", type="string", example="2024-07-30T12:55:39.000000Z"),
-     *     @OA\Property(property="updated_at", type="string", example="2024-07-30T12:55:39.000000Z"),
-     *     @OA\Property(property="deleted_at", type="string", example=null),
      * )
      * @OA\Schema(
      *     schema="AuthorGet",
@@ -302,12 +299,16 @@ class AuthorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Author $author)
+    public function destroy($author)
     {
         try {
-            $author->delete();
-            return response()->success(data: $author, httpCode: 200);
-        } catch (Exception $e) {
+            $author = Author::find($author);
+            if (@$author->id) {
+                $author->delete();
+                return response()->success(data: $author, httpCode: 200);
+            }
+            return response()->failed();
+        } catch (\Throwable $e) {
             return response()->failed(message: $e->getMessage());
         }
     }

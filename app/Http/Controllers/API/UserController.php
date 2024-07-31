@@ -159,7 +159,7 @@ class UserController extends Controller
      *     type="object",
      *     title="Get All Users",
      *     required={"status_code", "message", "data"},
-     *     @OA\Property(property="id", type="string", example="string"),
+     *     @OA\Property(property="id", type="string", example="9ca5730f-866c-430f-8067-c112e0ac9a5c"),
      *     @OA\Property(property="name", type="string", example="John Doe"),
      *     @OA\Property(property="email", type="string", example="john@example.com"),
      * )
